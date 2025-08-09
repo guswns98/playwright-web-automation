@@ -1,0 +1,36 @@
+# Node.js dependencies
+node_modules/
+
+# Playwright browser binaries
+.playwright/
+
+# Playwright test artifacts
+test-results/
+*.png
+*.jpg
+*.jpeg
+*.mp4
+*.webm
+*.zip
+*.log
+
+# Build output (TypeScript, bundlers)
+dist/
+out/
+*.tsbuildinfo
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE/editor settings
+.vscode/
+.idea/
+
+# Optional: coverage reports
+coverage/
