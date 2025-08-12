@@ -1,6 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { MUSINSA_ID, MUSINSA_PW } from '../utils/env';
-import { randomDelay } from '../utils/login';
+import { MUSINSA_ID, MUSINSA_PW } from './utils/env';
+import { randomDelay } from './utils/delay';
+import { checkCartItems } from './utils/checkCartItems';
+import { closePopupIfVisible } from './utils/popup';
+import { CAPTCHAIfVisible } from './utils/captcha';
+
+
 
 test('로그인 후 상품 장바구니 담기 및 결제 흐름', async ({ page, request }) => {
     //로그인 페이지로 이동
@@ -15,11 +20,7 @@ test('로그인 후 상품 장바구니 담기 및 결제 흐름', async ({ page
     await page.click('button[type="submit"]');
 
     // CAPTCHA 감지 시 
-    const captcha = page.locator('iframe[src*="captcha"]');
-    if (await captcha.isVisible()) {
-        console.log('CAPTCHA가 감지 수동 클릭');
-    await page.pause();
-    }
+    await CAPTCHAIfVisible(page);
 
     //로그인 성공 확인
     await expect(page).toHaveURL(/recommend/);
@@ -48,11 +49,7 @@ test('로그인 후 상품 장바구니 담기 및 결제 흐름', async ({ page
 
 
     // 조건부 팝업 닫기  
-    const popupCloseButton = page.locator('.popup-close');
-
-    if (await popupCloseButton.count() > 0 && await popupCloseButton.isVisible()) {
-    await popupCloseButton.click();
-    }
+    await closePopupIfVisible(page);
 
 
 
@@ -88,17 +85,7 @@ test('로그인 후 상품 장바구니 담기 및 결제 흐름', async ({ page
 
 
   //장바구니에 상품이 담겼는지 확인
-  const cartItemList = page.locator('div.cart-goods');
-  const itemCount = await cartItemList.count();
-
-  if (itemCount > 0) {
-    console.log(`✅ 장바구니에 ${itemCount}개의 상품이 있습니다.`);
-    await expect(cartItemList.first()).toBeVisible({ timeout: 10000 });
-  } else {
-    console.log('❌ 장바구니에 상품이 없습니다. HTML 출력');
-    const cartHtml = await page.innerHTML('div.cart-goods-list');
-    console.log(cartHtml);
-}
+  await checkCartItems(page);
 
 
   //결제 버튼 클릭
