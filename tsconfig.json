@@ -2,10 +2,15 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "CommonJS",
+    "rootDir": "./", // 또는 "playwright"
+    "outDir": "dist",
     "strict": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "outDir": "dist",
-    "rootDir": "tests"
-  }
-} 
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "types": ["playwright"]
+  },
+  "include": ["tests", "utils"]
+}
