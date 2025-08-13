@@ -35,6 +35,8 @@ test('로그인 후 상품 장바구니 담기 및 결제 흐름', async ({ page
     await expect(page).toHaveURL(/musinsa\.com/);
     // await expect(page).toHaveURL(/recommend/);
     await page.waitForTimeout(2000);  
+    console.log('현재 URL:', page.url());
+
 
     // 상품 검색
     await page.waitForSelector('[data-button-id="search_window"]');
