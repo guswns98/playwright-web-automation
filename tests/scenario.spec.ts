@@ -78,7 +78,7 @@ test('로그인 후 상품 장바구니 담기 및 결제 흐름', async ({ page
 
     //결제 페이지로 이동 확인
     await expect(page).toHaveURL(/order/);
-    await page.waitForTimeout(3000);  
+    await page.waitForTimeout(4000);  
 
     //메인 홈 이동
     await page.waitForSelector('[data-button-id="musinsa_store"]');
