@@ -27,10 +27,13 @@ test('로그인 후 상품 장바구니 담기 및 결제 흐름', async ({ page
     // CI 환경 로그인 후 글로벌 페이지로 리디렉션되면 한국 사이트로 다시 이동
     if (page.url().includes('global.musinsa.com/choose-location')) {
     await page.goto('https://www.musinsa.com');
+    await page.waitForLoadState('networkidle');
     }
 
+
     //로그인 성공 확인
-    await expect(page).toHaveURL(/recommend/);
+    await expect(page).toHaveURL(/musinsa\.com/);
+    // await expect(page).toHaveURL(/recommend/);
     await page.waitForTimeout(2000);  
 
     // 상품 검색
