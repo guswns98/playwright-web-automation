@@ -11,6 +11,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    
+    env:
+      MUSINSA_ID: ${{ secrets.MUSINSA_ID }}
+      MUSINSA_PW: ${{ secrets.MUSINSA_PW }}
 
     steps:
       - name: Checkout repository
