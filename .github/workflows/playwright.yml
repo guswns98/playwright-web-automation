@@ -1,17 +1,15 @@
-# .github/workflows/playwright.yml
-
 name: Playwright Tests
 
 on:
   push:
     branches: [ master ]
   pull_request:
-    branches: [ maaster ]
+    branches: [ master ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     env:
       MUSINSA_ID: ${{ secrets.MUSINSA_ID }}
       MUSINSA_PW: ${{ secrets.MUSINSA_PW }}
@@ -19,6 +17,22 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
