@@ -19,10 +19,15 @@ test('로그인 후 상품 장바구니 담기 및 결제 흐름', async ({ page
     await page.fill('input[title="비밀번호 입력"]', MUSINSA_PW);
     await page.waitForTimeout(randomDelay());
     await page.click('button[type="submit"]');
+    await page.waitForLoadState('networkidle');
 
     // CAPTCHA 감지 시 
     // await CAPTCHAIfVisible(page);
 
+    // CI 환경 로그인 후 글로벌 페이지로 리디렉션되면 한국 사이트로 다시 이동
+    if (page.url().includes('global.musinsa.com/choose-location')) {
+    await page.goto('https://www.musinsa.com');
+    }
 
     //로그인 성공 확인
     await expect(page).toHaveURL(/recommend/);
@@ -78,7 +83,7 @@ test('로그인 후 상품 장바구니 담기 및 결제 흐름', async ({ page
 
     //결제 페이지로 이동 확인
     await expect(page).toHaveURL(/order/);
-    await page.waitForTimeout(4000);  
+    await page.waitForTimeout(3000);  
 
     //메인 홈 이동
     await page.waitForSelector('[data-button-id="musinsa_store"]');
