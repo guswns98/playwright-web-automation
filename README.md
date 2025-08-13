@@ -9,6 +9,7 @@
 
 
 ## 프로젝트 구조
+```
 - Projects
 - ├── scenario.spec.ts  — 전체 테스트 시나리오 실행 스크립트
 - └── utils
@@ -18,6 +19,7 @@
 -     ├── checkCartItems.ts   — 장바구니에 담긴 상품 확인 처리
 -     ├── popup.ts            — 조건부 팝업 시 처리
 -     └── api-test.ts         — 장바구니 api 응답 상태코드 데이터 확인
+```
 
 ## TEST 시나리오
 - 로그인
